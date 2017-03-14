@@ -11,6 +11,7 @@ import random
 
 from collections import Counter
 from six.moves.urllib.request import urlretrieve
+from requests import get
 
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -63,6 +64,15 @@ def maybe_download(url, filename, prefix, num_bytes=None):
         raise Exception("Unexpected dataset size. Please get the dataset using a browser.")
 
     return local_filename
+    
+def download(url, file_name):
+    with open(file_name, "wb") as file:
+        # get request
+        response = get(url)
+        # write to file
+        file.write(response.content)
+
+    return file_name
 
 
 def data_from_json(filename):
